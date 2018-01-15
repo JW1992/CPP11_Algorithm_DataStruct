@@ -37,28 +37,31 @@ void MergeSort(std::vector<int>& nums, int m, int n){
 	Merge(nums, m, medium, n);
 }
 
-//Quick sort
-int Partition(std::vector<int>& nums, int m, int n){
-	int pivot = nums[n-1];
-	int i = m-1;//Index of the value that is LARGER than pivot.
-	for(int j=m; j<n-1; j++){
-		if(nums[j]<=pivot){
-			i++;
-			Swap(nums, j, i);
+//Quick sort (three way): unstable
+void Partition(std::vector<int>& nums, int l, int r, int&i, int &j){
+	int pivot = nums[r-1];
+	int m = l;
+	while(m<r){
+		if(nums[m]==pivot) m++;
+		else if(nums[m]<pivot) Swap(nums, l++, m++);
+		else{
+			Swap(nums, m, r-1);
+			r--;
 		}
 	}
-	Swap(nums, ++i, n-1);
-	return i;
+	i = l;
+	j = m;
 }
 void QuickSort(std::vector<int>& nums, int m, int n){
 	if(n-m<=1) return;
-	int medium = Partition(nums, m, n);
-	QuickSort(nums, m, medium);
-	QuickSort(nums, medium+1, n);
+	int i, j;
+	Partition(nums, m, n, i, j);
+	QuickSort(nums, m, i);
+	QuickSort(nums, j, n);
 }
 
 int main(){
-	std::vector<int> nums = {9,8,7,6,5,4,3,2,1,0};
+	std::vector<int> nums = {9,8,7,6,0,5,0,4,3,2,1,0};
 	PrintArray(nums);
 	//MergeSort(nums, 0, nums.size());
 	QuickSort(nums, 0, nums.size());
