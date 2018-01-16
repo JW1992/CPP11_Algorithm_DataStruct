@@ -15,6 +15,25 @@ void Swap(std::vector<int>& nums, int m, int n){
 
 
 //Heap sort
+void Heapify(std::vector<int>& nums, int n, int i){
+	int indxMax = i;
+	int l = indxMax*2+1;
+	int r = indxMax*2+2;
+	if(l<n && nums[l]>nums[indxMax]) indxMax = l;
+	if(r<n && nums[r]>nums[indxMax]) indxMax = r;
+	if(indxMax != i){
+		Swap(nums, indxMax, i);
+		Heapify(nums, n, indxMax);
+	}
+}
+void HeapSort(std::vector<int>& nums){
+	for(int i=nums.size()/2-1; i>0; i--) Heapify(nums, nums.size(), i);
+	for(int i=nums.size()-1; i>0; i--){
+		Swap(nums, i, 0);
+		Heapify(nums, i, 0);
+	}
+}
+
 //Merge sort
 void Merge(std::vector<int>& nums, int l, int m, int n){
 	int temp1[m-l];
@@ -64,7 +83,8 @@ int main(){
 	std::vector<int> nums = {9,8,7,6,0,5,0,4,3,2,1,0};
 	PrintArray(nums);
 	//MergeSort(nums, 0, nums.size());
-	QuickSort(nums, 0, nums.size());
+	//QuickSort(nums, 0, nums.size());
+	HeapSort(nums);
 	PrintArray(nums);
 	return 0;
 }
