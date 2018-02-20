@@ -37,6 +37,8 @@ public:
 	}
 private:
 	int N;
+	
+	//Use numbers that are 2^n
 	int nSize = 16;
 	int* nums;
 	void resize(int capacity){
